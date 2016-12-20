@@ -24,7 +24,6 @@ class LogisticRegressionTest {
       "2"
     )
     LogisticRegression.main(args)
-//    println(new File(".").getAbsolutePath)
     val exist = new File(args(2)).exists()
     assertTrue(exist)
   }
