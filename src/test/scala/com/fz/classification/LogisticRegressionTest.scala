@@ -5,6 +5,7 @@ import java.io.File
 import org.junit.{Assert, Test}
 import Assert._
 /**
+ * 测试Logistics Regression算法
  * Created by fanzhe on 2016/12/19.
  */
 @Test
