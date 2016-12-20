@@ -15,8 +15,8 @@ class LogisticRegressionTest {
 //    testOrNot input output targetIndex splitter method hasIntercept numClasses
     val args = Array(
       "true",
-      "../../../../../../data/logistic.dat",
-      "../../../../../../../target/tmp",
+      "./src/data/logistic.dat",
+      "./target/tmp",
       "1",
       " ",
       "SGD",
@@ -24,6 +24,7 @@ class LogisticRegressionTest {
       "2"
     )
     LogisticRegression.main(args)
+//    println(new File(".").getAbsolutePath)
     val exist = new File(args(2)).exists()
     assertTrue(exist)
   }
