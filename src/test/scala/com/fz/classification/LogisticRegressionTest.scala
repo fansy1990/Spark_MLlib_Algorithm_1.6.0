@@ -24,6 +24,7 @@ class LogisticRegressionTest {
       "true",
       "2"
     )
+    new File(args(2)).deleteOnExit()
     LogisticRegression.main(args)
     val exist = new File(args(2)).exists()
     assertTrue(exist)
