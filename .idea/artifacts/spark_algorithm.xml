@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="spark_algorithm">
+    <output-path>$PROJECT_DIR$/out/artifacts/spark_algorithm</output-path>
+    <root id="archive" name="spark_algorithm.jar">
+      <element id="module-output" name="Spark_MLlib_Algorithm_1.6.0" />
+    </root>
+  </artifact>
+</component>
