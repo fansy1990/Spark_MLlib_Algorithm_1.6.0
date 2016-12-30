@@ -12,21 +12,42 @@ import Assert._
 class LogisticRegressionTest {
 
   @Test
-  def testMain()={
+  def testMain1()={
 //    testOrNot input output targetIndex splitter method hasIntercept numClasses
     val args = Array(
       "true",
       "./src/data/logistic.dat",
-      "./target/tmp",
+      "2",
+      "./target/logistic/tmp1",
       "1",
       " ",
       "SGD",
       "true",
+      "2" // this parameter is useless
+    )
+
+    LogisticRegression.main(args)
+    val exist = new File(args(3)).exists()
+    assertTrue(exist)
+  }
+
+  @Test
+  def testMain2()={
+    //    testOrNot input minPartitions output targetIndex splitter method hasIntercept numClasses
+    val args = Array(
+      "true",
+      "./src/data/logistic.dat",
+      "2",
+      "./target/logistic/tmp2",
+      "1",
+      " ",
+      "LBFGS",
+      "true",
       "2"
     )
-    new File(args(2)).deleteOnExit()
+
     LogisticRegression.main(args)
-    val exist = new File(args(2)).exists()
+    val exist = new File(args(3)).exists()
     assertTrue(exist)
   }
 }
