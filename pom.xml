@@ -6,7 +6,7 @@
   <inceptionYear>2008</inceptionYear>
     <properties>
         <scala.version>2.10.6</scala.version>
-        <spark.version>1.6.0-cdh5.7.3</spark.version>
+        <spark.version>1.6.0-cdh5.8.0</spark.version>
         <org.spec.version>1.2.5</org.spec.version>
         <junit.version>4.10</junit.version>
     </properties>
