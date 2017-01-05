@@ -2,6 +2,7 @@ package com.fz.classification
 
 import java.io.File
 
+import com.fz.util.Utils
 import org.junit.{Assert, Test}
 import Assert._
 /**
@@ -25,7 +26,8 @@ class LogisticRegressionTest {
       "true",
       "2" // this parameter is useless
     )
-
+    // 删除输出目录
+    Utils.deleteOutput(args(3))
     LogisticRegression.main(args)
     val exist = new File(args(3)).exists()
     assertTrue(exist)
@@ -45,7 +47,8 @@ class LogisticRegressionTest {
       "true",
       "2"
     )
-
+    // 删除输出目录
+    Utils.deleteOutput(args(3))
     LogisticRegression.main(args)
     val exist = new File(args(3)).exists()
     assertTrue(exist)

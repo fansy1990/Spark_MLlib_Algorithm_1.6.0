@@ -2,6 +2,7 @@ package com.fz.classification
 
 import java.io.File
 
+import com.fz.util.Utils
 import org.junit.Assert._
 import org.junit.{Assert, Test}
 
@@ -29,7 +30,8 @@ class SVMTest {
       "1.0",
       "L1"
     )
-
+    // 删除输出目录
+    Utils.deleteOutput(args(3))
     SVM.main(args)
     val exist = new File(args(3)).exists()
     assertTrue(exist)
@@ -52,7 +54,8 @@ class SVMTest {
       "1.0",
       "L2"
     )
-
+    // 删除输出目录
+    Utils.deleteOutput(args(3))
     SVM.main(args)
     val exist = new File(args(3)).exists()
     assertTrue(exist)
