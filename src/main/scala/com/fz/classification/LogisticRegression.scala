@@ -39,8 +39,8 @@ object LogisticRegression {
      val hasIntercept = args(7).toBoolean
      val numClasses = args(8).toInt
 
-     // 删除输出
-     Utils.deleteOutput(output)
+     // 删除输出，不在Scala算法里面删除，而在Java代码里面删除
+//     Utils.deleteOutput(output)
 
      val sc =  Utils.getSparkContext(testOrNot,"Logistic Create Model")
 

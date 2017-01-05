@@ -40,8 +40,8 @@ object SVM {
      val regParam = args(8).toDouble
      val miniBatchFraction = args(9).toDouble
      val regMethod = args(10)
-     // 删除输出
-     Utils.deleteOutput(output)
+     // 删除输出，不在Scala算法里面删除，而在Java代码里面删除
+     //     Utils.deleteOutput(output)
 
      val sc =  Utils.getSparkContext(testOrNot,"SVM create Model")
 
