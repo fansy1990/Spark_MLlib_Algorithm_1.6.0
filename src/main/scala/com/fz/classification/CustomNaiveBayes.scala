@@ -43,9 +43,8 @@ object CustomNaiveBayes {
     // construct data
     // Load and parse the data
     val training = Utils.getLabeledPointData(sc,input,minPartitions,splitter,targetIndex).cache()
-
-//     Run training algorithm to build the model
     val modelTypes =Array("multinomial","bernoulli").toList//朴素贝叶斯的类型{"multinomial","bernoulli"}
+    //     Run training algorithm to build the model
     val model = modelTypes.contains(modelType) match {
       case true => NaiveBayes.train(training,lambda,modelType)
       case false =>throw new RuntimeException("the model '"+modelType+"' of NaiveBayes is undefined.Only the \"multinomial\"or \"bernoulli\" is  available ")
