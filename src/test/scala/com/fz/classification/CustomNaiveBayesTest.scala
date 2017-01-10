@@ -14,10 +14,10 @@ import org.junit.Test
 class CustomNaiveBayesTest {
   @Test
   def testMain1()={
-    //    testOrNot input output targetIndex splitter method hasIntercept numClasses
+    //    testOrNot input output targetIndex splitter modelType lambda
     val args = Array(
       "true",
-      "./src/data/bayes.dat",
+      "./src/data/naiveBayes1.dat",
       "2",
       "./target/bayes/tmp1",
       "1",
@@ -34,10 +34,10 @@ class CustomNaiveBayesTest {
 
   @Test
   def testMain2()={
-    //    testOrNot input output targetIndex splitter method hasIntercept numClasses
+    //    testOrNot input output targetIndex splitter modelType lambda
     val args = Array(
       "true",
-      "./src/data/naiveBayesBer.dat",
+      "./src/data/naiveBayes2.dat",
       "2",
       "./target/bayes/tmp1",
       "1",

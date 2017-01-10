@@ -6,10 +6,10 @@ import org.apache.spark.mllib.optimization.L1Updater
 
 /**
  * 朴素贝叶斯封装算法
- * Labels used in Logistic Regression should be {0, 1, ..., k - 1} for k classes multi-label classification problem
+ * Labels(标签) used in NaiveBayses should be {0, 1, ..., k - 1}(k can also be negative)for k classes multi-label classification problem
  * 输入参数：
  * testOrNot : 是否是测试，正常情况设置为false
- * input：输出数据；
+ * input：输入数据；标签列可以是任意整数;表示特征的值如果是 multinomial，则非负，如果是bernoulli，则是0,1
  * minPartitions : 输入数据最小partition个数
  * output：输出路径
  * targetIndex：目标列所在下标，从1开始
@@ -47,7 +47,7 @@ object CustomNaiveBayes {
     //     Run training algorithm to build the model
     val model = modelTypes.contains(modelType) match {
       case true => NaiveBayes.train(training,lambda,modelType)
-      case false =>throw new RuntimeException("the model '"+modelType+"' of NaiveBayes is undefined.Only the \"multinomial\"or \"bernoulli\" is  available ")
+      case false =>throw new RuntimeException("the model '"+modelType+"' of NaiveBayes is not defined.Only the \"multinomial\"or \"bernoulli\" is  available ")
     }
     model.save(sc,output)
     sc.stop()
