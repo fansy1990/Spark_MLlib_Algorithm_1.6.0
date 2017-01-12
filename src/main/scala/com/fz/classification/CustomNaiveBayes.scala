@@ -38,18 +38,18 @@ object CustomNaiveBayes {
     // 删除输出，不在Scala算法里面删除，而在Java代码里面删除
     //     Utils.deleteOutput(output)
 
-    val sc =  Utils.getSparkContext(testOrNot,"NaiveBayes create Model")
+    val sc = Utils.getSparkContext(testOrNot, "NaiveBayes create Model")
 
     // construct data
     // Load and parse the data
-    val training = Utils.getLabeledPointData(sc,input,minPartitions,splitter,targetIndex).cache()
-    val modelTypes =Array("multinomial","bernoulli").toList//朴素贝叶斯的类型{"multinomial","bernoulli"}
+    val training = Utils.getLabeledPointData(sc, input, minPartitions, splitter, targetIndex).cache()
+    val modelTypes = Array("multinomial", "bernoulli").toList //朴素贝叶斯的类型{"multinomial","bernoulli"}
     //     Run training algorithm to build the model
     val model = modelTypes.contains(modelType) match {
-      case true => NaiveBayes.train(training,lambda,modelType)
-      case false =>throw new RuntimeException("the model '"+modelType+"' of NaiveBayes is not defined.Only the \"multinomial\"or \"bernoulli\" is  available ")
-    }
-    model.save(sc,output)
+        case true => NaiveBayes.train(training, lambda, modelType)
+        case false => throw new RuntimeException("the model '" + modelType + "' of NaiveBayes is not defined.Only the \"multinomial\"or \"bernoulli\" is  available ")
+      }
+    model.save(sc, output)
     sc.stop()
   }
 }
