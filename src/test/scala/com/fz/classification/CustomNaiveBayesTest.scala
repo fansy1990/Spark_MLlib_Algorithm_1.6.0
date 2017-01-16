@@ -7,7 +7,7 @@ import org.junit.Assert._
 import org.junit.Test
 
 /**
- * 测试Bayes算法
+ * 测试CustomNaiveBayes算法封装
  * Created by cuihuan on 2017/1/7.
  */
 @Test
