@@ -40,7 +40,6 @@ object SparkKMeans {
     val sc =  Utils.getSparkContext(testOrNot,"Kmeans Create Model")
 
 
-
     val parsedData = sc.textFile(inputData).map { line =>
       val values = line.split(splitter).map(_.toDouble)
       // 使用定制的列，而非全部数据
@@ -51,8 +50,7 @@ object SparkKMeans {
 
     // Evaluate clustering by computing Within Set Sum of Squared Errors
     val WSSSE: Double = clusters.computeCost(parsedData)
-//    println("Within Set Sum of Squared Errors = " + WSSSE)
-
+//      println("Within Set Sum of Squared Errors = " + WSSSE)
     clusters.save(sc,outputFile)
 
     sc.stop()
