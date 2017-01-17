@@ -1,10 +1,7 @@
 package com.fz.classification
 
 import com.fz.util.Utils
-import org.apache.spark.mllib.classification.SVMWithSGD
-import org.apache.spark.mllib.optimization.L1Updater
 import org.apache.spark.mllib.tree.DecisionTree
-import org.apache.spark.mllib.util.MLUtils
 
 /**
  *决策树-分类封装算法   Labels should take values {0, 1, ..., numClasses-1}
