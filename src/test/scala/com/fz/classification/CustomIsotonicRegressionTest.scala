@@ -7,17 +7,18 @@ import org.junit.Assert._
 import org.junit.Test
 
 /**
- * 测试CustomIsotonicRegression算法封装
- * Created by cuihuan on 2017/1/16.
+ * 测试算法CustomIsotonicRegression算法
+ * Created by cuihuan on 2017/2/5.
+ *
  */
-@Test
 class CustomIsotonicRegressionTest {
+
   @Test
-  def testMain(): Unit ={
+  def testMain1()={
     //    testOrNot input minPartitions output targetIndex splitter weights isotonic
     val args = Array(
       "true",
-      "./src/data/isotonicRegression.dat",
+      "./src/data/classification_regression/isotonicRegression.dat",
       "2",
       "./target/isotonicRegression/tmp1",
       "1",

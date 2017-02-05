@@ -17,7 +17,7 @@ class CustomNaiveBayesTest {
     //    testOrNot input output targetIndex splitter modelType lambda
     val args = Array(
       "true",
-      "./src/data/naiveBayes1.dat",
+      "./src/data/classification_regression/naiveBayes1.dat",
       "2",
       "./target/bayes/tmp1",
       "1",
@@ -37,7 +37,7 @@ class CustomNaiveBayesTest {
     //    testOrNot input output targetIndex splitter modelType lambda
     val args = Array(
       "true",
-      "./src/data/naiveBayes2.dat",
+      "./src/data/classification_regression/naiveBayes2.dat",
       "2",
       "./target/bayes/tmp1",
       "1",

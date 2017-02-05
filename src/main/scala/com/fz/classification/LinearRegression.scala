@@ -5,7 +5,7 @@ import org.apache.spark.mllib.regression.LinearRegressionWithSGD
 
 /**
  * 线性回归封装算法
- * 规则函数：no no regulation
+ * 规则函数：no regulation
  * Labels used in LinearRegression should be number(integer or double)
  * 输入参数：
  * testOrNot : 是否是测试，正常情况设置为false
