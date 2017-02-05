@@ -2,15 +2,14 @@ package com.fz.clustering
 
 import com.fz.util.Utils
 import org.apache.spark.mllib.clustering.{KMeans, KMeansModel}
-
 /**
  * Created by wenchao on 2017-1-16.
  *
  * Kmeans封装算法
  * In data mining（数据挖掘）, k-means++ is an algorithm for choosing the initial values (or "seeds") for the k-means clustering algorithm.
  *输入参数：
- * testOrNot : 是否是测试，正常情况设置为false
- * inputData：输出数据；
+ * testOrNot : 是否是测试，true为测试，正常情况设置为false
+ * inputData：输入数据，数据类型为数值型；
  * splitter：数据分隔符；
  * numClusters：聚类个数
  * numIterations : 最大迭代次数
@@ -44,13 +43,29 @@ object SparkKMeans {
       val values = line.split(splitter).map(_.toDouble)
       // 使用定制的列，而非全部数据
       Utils.getVectors(values, columns)
-    }
+    }.cache()
 
     val clusters: KMeansModel = KMeans.train(parsedData,numClusters,numIterations)
 
     // Evaluate clustering by computing Within Set Sum of Squared Errors
     val WSSSE: Double = clusters.computeCost(parsedData)
 //      println("Within Set Sum of Squared Errors = " + WSSSE)
+
+//    println("聚类数： "+ clusters.k)
+//    println("聚类中心： ")
+//    clusters.clusterCenters.map(_.toArray).foreach{t =>
+//      for(i <- 0 until(t.length)){
+//        print(t(i)+",")
+//      }
+//      println("")
+//    }
+
+//    val vec = Array(8.0,7,9)
+//    val cls = clusters.predict(Vectors.dense(vec))
+//
+//    println("预测类别：" + cls)
+//
+//    clusters.predict(parsedData).foreach(t => println("归为： "+t))
     clusters.save(sc,outputFile)
 
     sc.stop()

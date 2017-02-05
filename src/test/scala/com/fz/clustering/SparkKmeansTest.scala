@@ -19,7 +19,7 @@ class SparkKMeansTest {
 
     val args = Array(
     "true",
-    "./src/data/kmeans.txt",
+    "./src/data/clustering/kmeans.txt",
     " ",
     "3",
     "10",
@@ -34,4 +34,27 @@ class SparkKMeansTest {
     assertTrue(exist)
 
   }
+
+
+    @Test
+    def testMain2()= {
+
+        //    <testOrNot> <inputData> <splitter> <modelFile> <outputFile> <columns>")
+
+        val args = Array(
+            "true",
+            "./src/data/clustering/kmeans.txt",
+            " ",
+            "./target/kmeans/tmp1",
+            "./target/kmeans/tmp1/result",
+            "111"
+        )
+
+        // 删除输出目录
+        Utils.deleteOutput(args(4))
+        SparkKMeansPredict.main(args)
+        val exist = new File(args(4)).exists()
+        assertTrue(exist)
+
+    }
 }
