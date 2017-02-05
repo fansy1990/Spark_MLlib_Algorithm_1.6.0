@@ -62,8 +62,32 @@ object Utils {
         vec+=ds(i)
       }
     }
-
     Vectors.dense(vec.toArray)
 
   }
+
+  /**
+  根据列字符串输出元组
+  @param ds
+  @param columns 类似"0101110" 的字符串
+  @return
+   */
+  def getTuples(ds:Array[String],columns:String)={
+    val cols = columns.toCharArray
+    val vec = ArrayBuffer[String]()
+    for(i <- 0 until(cols.length)){
+      if('1'.equals(cols(i))){
+        vec+=ds(i)
+      }
+    }
+    (vec(0).toLong,vec(1).toLong,vec(2).toDouble)
+  }
+
+
+//  def main(args: Array[String]) {
+//    val a = Array("123","234","345","456")
+//    val b = "1011"
+//    val t = getTuples(a,b)
+//    println(t._1+","+t._2+","+t._3)
+//  }
 }

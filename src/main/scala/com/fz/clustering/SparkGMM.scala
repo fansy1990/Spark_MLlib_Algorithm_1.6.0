@@ -2,10 +2,11 @@ package com.fz.clustering
 
 import com.fz.util.Utils
 import org.apache.spark.mllib.clustering.GaussianMixture
+
 /**
- * Created by admin on 2017-2-5.
+ * Created by weiwenchao on 2017-2-5.
  *
- * * GMM(GaussianMixtureModel，高斯混合模型)封装算法
+ * GMM(GaussianMixtureModel，高斯混合模型)封装算法
  *输入参数：
  * testOrNot : 是否是测试，true为测试，正常情况设置为false
  * inputData：输入数据，数据类型为数值型；
