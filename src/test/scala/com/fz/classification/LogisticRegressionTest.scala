@@ -17,7 +17,7 @@ class LogisticRegressionTest {
 //    testOrNot input output targetIndex splitter method hasIntercept numClasses
     val args = Array(
       "true",
-      "./src/data/logistic.dat",
+      "./src/data/classification_regression/logistic.dat",
       "2",
       "./target/logistic/tmp1",
       "1",
@@ -38,7 +38,7 @@ class LogisticRegressionTest {
     //    testOrNot input minPartitions output targetIndex splitter method hasIntercept numClasses
     val args = Array(
       "true",
-      "./src/data/logistic.dat",
+      "./src/data/classification_regression/logistic.dat",
       "2",
       "./target/logistic/tmp2",
       "1",

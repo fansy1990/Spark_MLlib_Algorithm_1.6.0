@@ -20,7 +20,7 @@ class RidgeAndLassoRegressionTest {
     //    "splitter numIteration stepSize regParam miniBatchFraction hasIntercept regressionType
     val args = Array(
       "true",
-      "./src/data/lpsa.dat",
+      "./src/data/classification_regression/lpsa.dat",
       "2",
       "./target/ridgeAndLassoRegression/tmp1",
       "1",

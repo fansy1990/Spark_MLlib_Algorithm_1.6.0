@@ -7,7 +7,7 @@ import org.junit.Assert._
 import org.junit.Test
 
 /**
- * 测试DecisionTree算法
+ * 测试CustomDecisionTree算法
  * Created by cuihuan on 2017/1/16.
  */
 @Test
@@ -16,7 +16,7 @@ class DecisionTreeTest {
   @Test
   def testMain1()={
     //    testOrNot input minPartitions output targetIndex " +
-    //    "splitter impurity maxDepth numClasses maxBins
+    //    "splitter impurity maxDepth algo  maxBins numClasses
     val args = Array(
       "true",
       "./src/data/logistic.dat",
@@ -26,12 +26,13 @@ class DecisionTreeTest {
       " ",
       "gini",// 或者 entropy
       "10",
-      "2" ,//
-      "32"
+      "classification",
+      "32",
+      "2"
     )
     // 删除输出目录
     Utils.deleteOutput(args(3))
-    DecisionTreeClassification.main(args)
+    CustomDecisionTree.main(args)
     val exist = new File(args(3)).exists()
     assertTrue(exist)
   }
@@ -40,21 +41,22 @@ class DecisionTreeTest {
   @Test
   def testMain2()={
     //    testOrNot input minPartitions output targetIndex " +
-    //    "splitter impurity maxDepth maxBins
+    //    "splitter impurity maxDepth algo maxBins
     val args = Array(
       "true",
-      "./src/data/lpsa.dat",
+      "./src/data/classification_regression/lpsa.dat",
       "2",
       "./target/decisionTree/tmp2",
       "1",
       " ",
       "variance",
       "10",
+      "regression",
       "32"
     )
     // 删除输出目录
     Utils.deleteOutput(args(3))
-    DecisionTreeRegression.main(args)
+    CustomDecisionTree.main(args)
     val exist = new File(args(3)).exists()
     assertTrue(exist)
   }

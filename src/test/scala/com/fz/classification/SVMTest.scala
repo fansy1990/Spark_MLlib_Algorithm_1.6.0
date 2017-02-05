@@ -19,7 +19,7 @@ class SVMTest {
 //    "splitter numIteration stepSize regParam miniBatchFraction regMethod
     val args = Array(
       "true",
-      "./src/data/logistic.dat",
+      "./src/data/classification_regression/logistic.dat",
       "2",
       "./target/svm/tmp1",
       "1",
@@ -43,7 +43,7 @@ class SVMTest {
     //    "splitter numIteration stepSize regParam miniBatchFraction regMethod
     val args = Array(
       "true",
-      "./src/data/logistic.dat",
+      "./src/data/classification_regression/logistic.dat",
       "2",
       "./target/svm/tmp1",
       "1",

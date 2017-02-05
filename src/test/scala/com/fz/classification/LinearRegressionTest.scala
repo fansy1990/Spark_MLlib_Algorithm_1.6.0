@@ -19,7 +19,7 @@ class LinearRegressionTest {
 //    "splitter numIteration stepSize miniBatchFraction hasIntercept
     val args = Array(
       "true",
-      "./src/data/lpsa.dat",
+      "./src/data/classification_regression/lpsa.dat",
       "2",
       "./target/linearRegression/tmp1",
       "1",

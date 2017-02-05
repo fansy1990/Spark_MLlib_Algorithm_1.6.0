@@ -1,3 +1,12 @@
 
 分类算法简述：
-1. 逻辑回归：处理二分类分类问题；
+1. 逻辑回归(LogisticRegression)：处理二分类、多元分类分类问题；
+2. 支持向量机(SVM)：目前spark 1.6只支持二元分类问题；
+3. 线性回归(LinearRegression)：处理回归问题，没有用到规则函数；
+4. 岭回归(RidgeRegression):处理回归问题，用到L2规则函数；
+5. 套索回归(LassoRegression):处理回归问题，用到L1规则函数；
+6. 朴素贝叶斯(CustomNaiveBayes)：用于多元分类，有多项式朴素贝叶斯和伯努利朴素贝叶斯，多项式中的特征值要求非负，伯努利的特征值要求为0或1；
+7. 保序回归(CustomIsotonicRegression)：用于处理回归问题；
+8. 决策树(CustomDecisionTree)：可用于处理二元分类、多元分类和回归问题；
+9. 随机森林(CustomRandomForest)：可用于处理二元分类、多元分类和回归问题；
+10. 梯度提升树(CustomGradientBoostedTrees)：可用于处理二元分类和回归问题；

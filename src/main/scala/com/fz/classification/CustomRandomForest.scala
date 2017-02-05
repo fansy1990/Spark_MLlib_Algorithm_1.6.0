@@ -1,7 +1,7 @@
 package com.fz.classification
 
 import com.fz.util.Utils
-import org.apache.spark.mllib.tree.{RandomForest, DecisionTree}
+import org.apache.spark.mllib.tree.{RandomForest}
 
 /**
  * 随机森林封装算法   可用于
