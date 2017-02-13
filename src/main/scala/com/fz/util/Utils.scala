@@ -2,9 +2,11 @@ package com.fz.util
 
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.fs.{Path, FileSystem}
+import org.apache.spark.mllib.classification.{SVMModel, LogisticRegressionModel}
 import org.apache.spark.mllib.linalg.{Vector, Vectors}
 import org.apache.spark.mllib.recommendation.Rating
 import org.apache.spark.mllib.regression.LabeledPoint
+import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}
 
 import scala.collection.mutable.ArrayBuffer
@@ -15,6 +17,47 @@ import scala.io.Source
  * Created by fansy on 2016/12/30.
  */
 object Utils {
+  /**
+   * 获取vector rdd数据
+   * @param sc
+   * @param input
+   * @param splitter
+   * @param minPartitions
+   * @return
+   */
+  def getVectorData(sc: SparkContext, input: String, splitter: String, minPartitions: Int): RDD[Vector] ={
+     sc.textFile(input,minPartitions).map{x => val arr = x.split(splitter);Vectors.dense(arr.map(_.toDouble))}
+  }
+
+  /**
+   * 寻找文件的纬度
+   * @param file
+   * @param splitter
+   * @return
+   */
+  def findDimension(file:String, splitter:String): Int ={
+    Source.fromFile(file).getLines.next().split(splitter).size
+  }
+  /**
+   * 根据路径获取模型
+   * @param s
+   * @return
+   */
+  def getModel(sc:SparkContext , s: String) = {
+    // 读取路径，获得类名：
+    //{"class":"org.apache.spark.mllib.classification.LogisticRegressionModel",
+    // "version":"1.0","numFeatures":16,"numClasses":2}
+    val className = "org.apache.spark.mllib.classification.LogisticRegressionModel"
+    val class_ = Class.forName(className)
+
+    class_ match {
+      case x : LogisticRegressionModel => LogisticRegressionModel.load(sc, s)
+      case x : SVMModel => SVMModel.load(sc,s)
+      case _ => println("根据类名加载模型异常！"); null
+    }
+
+  }
+
 
   /**
    * 从输入数据获取Rating数据

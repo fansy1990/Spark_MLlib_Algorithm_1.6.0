@@ -34,7 +34,7 @@ class SparkPICTest {
 
       val args = Array(
     "true",
-    "./src/data/clustering/pic.txt",
+    "./src/data/clustering/pca.txt",
     ",",
     "3",
     "10",
