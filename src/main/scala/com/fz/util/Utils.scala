@@ -3,10 +3,12 @@ package com.fz.util
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.fs.{Path, FileSystem}
 import org.apache.spark.mllib.linalg.{Vector, Vectors}
+import org.apache.spark.mllib.recommendation.Rating
 import org.apache.spark.mllib.regression.LabeledPoint
 import org.apache.spark.{SparkConf, SparkContext}
 
 import scala.collection.mutable.ArrayBuffer
+import scala.io.Source
 
 /**
  * 工具类
@@ -14,6 +16,30 @@ import scala.collection.mutable.ArrayBuffer
  */
 object Utils {
 
+  /**
+   * 从输入数据获取Rating数据
+   * @param sc
+   * @param input
+   * @param minPartitions
+   * @param splitter
+   * @return
+   */
+  def getRatingData(sc: SparkContext, input:String,minPartitions :Int,splitter:String) = {
+    val data = sc.textFile(input,minPartitions)
+    data.map(_.split(splitter) match { case Array(user, item, rate) =>
+      Rating(user.toInt, item.toInt, rate.toDouble)})
+  }
+
+  /**
+   * 文件是否包含固定字符串
+   * @param file
+   * @param className
+   * @return
+   */
+  def fileContainsClassName(file:String ,className:String):Boolean = {
+    val fileContents = Source.fromFile(file).getLines.mkString
+    fileContents.contains(className)
+  }
   /**
    * 获取SparkContext
    * @param testOrNot
