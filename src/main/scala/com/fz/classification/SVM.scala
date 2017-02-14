@@ -5,7 +5,9 @@ import org.apache.spark.mllib.classification.SVMWithSGD
 import org.apache.spark.mllib.optimization.L1Updater
 
 /**
- * 逻辑回归封装算法
+ * SVM封装算法
+ *  Linear SVMs supports only binary classification,
+ *  while logistic regression supports both binary and multiclass classification problems
  *  Labels used in SVM should be {0, 1}
  * 输入参数：
  * testOrNot : 是否是测试，正常情况设置为false

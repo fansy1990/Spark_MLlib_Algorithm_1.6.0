@@ -29,8 +29,8 @@ class LogisticRegressionTest {
     // 删除输出目录
     Utils.deleteOutput(args(3))
     LogisticRegression.main(args)
-    val exist = new File(args(3)).exists()
-    assertTrue(exist)
+    assertTrue(Utils.fileContainsClassName(args(3)+"/metadata/part-00000",
+      "org.apache.spark.mllib.classification.LogisticRegressionModel"))
   }
 
   @Test
@@ -50,7 +50,7 @@ class LogisticRegressionTest {
     // 删除输出目录
     Utils.deleteOutput(args(3))
     LogisticRegression.main(args)
-    val exist = new File(args(3)).exists()
-    assertTrue(exist)
+    assertTrue(Utils.fileContainsClassName(args(3)+"/metadata/part-00000",
+      "org.apache.spark.mllib.classification.LogisticRegressionModel"))
   }
 }
