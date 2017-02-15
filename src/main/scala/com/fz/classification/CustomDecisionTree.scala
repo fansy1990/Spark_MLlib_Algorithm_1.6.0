@@ -2,9 +2,10 @@ package com.fz.classification
 
 import com.fz.util.Utils
 import org.apache.spark.mllib.tree.DecisionTree
-
+// TODO DecisionTree算法仍可封装参数 http://spark.apache.org/docs/1.6.0/mllib-decision-tree.html
 /**
  *决策树-分类封装算法
+ * 数据属性可以是 离散型或数值型
  *  可用于二元分类、多元分类 Labels should take values {0, 1, ..., numClasses-1}
  *  回归：labels are real numbers(标签是实数)
  * 输入参数：

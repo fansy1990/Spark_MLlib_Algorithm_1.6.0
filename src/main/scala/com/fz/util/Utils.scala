@@ -91,7 +91,7 @@ object Utils {
    */
   def getSparkContext(testOrNot: Boolean,name :String) =
     new SparkContext( (if(testOrNot) new SparkConf().setMaster("local[2]")
-      else new SparkConf())setAppName(name)
+      else new SparkConf().set("spark.driver.allowMultipleContexts","true"))setAppName(name)
     )
 
   /**

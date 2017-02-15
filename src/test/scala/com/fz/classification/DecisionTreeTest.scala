@@ -19,7 +19,7 @@ class DecisionTreeTest {
     //    "splitter impurity maxDepth algo  maxBins numClasses
     val args = Array(
       "true",
-      "./src/data/logistic.dat",
+      "./src/data/classification_regression/logistic.dat",
       "2",
       "./target/decisionTree/tmp1",
       "1",
@@ -33,8 +33,8 @@ class DecisionTreeTest {
     // 删除输出目录
     Utils.deleteOutput(args(3))
     CustomDecisionTree.main(args)
-    val exist = new File(args(3)).exists()
-    assertTrue(exist)
+    assertTrue(Utils.fileContainsClassName(args(3)+"/metadata/part-00000",
+      "org.apache.spark.mllib.tree.DecisionTreeModel"))
   }
 
   //DecisionTree的回归
@@ -57,7 +57,7 @@ class DecisionTreeTest {
     // 删除输出目录
     Utils.deleteOutput(args(3))
     CustomDecisionTree.main(args)
-    val exist = new File(args(3)).exists()
-    assertTrue(exist)
+    assertTrue(Utils.fileContainsClassName(args(3)+"/metadata/part-00000",
+      "org.apache.spark.mllib.tree.DecisionTreeModel"))
   }
 }
