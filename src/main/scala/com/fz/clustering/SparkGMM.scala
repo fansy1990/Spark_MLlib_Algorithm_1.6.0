@@ -56,10 +56,10 @@ object SparkGMM {
 //    val sameModel = GaussianMixtureModel.load(sc, outputFile)
 
     // output parameters of max-likelihood model
-    for (i <- 0 until gmm.k) {
-      println("weight=%f\nmu=%s\nsigma=\n%s\n" format
-        (gmm.weights(i), gmm.gaussians(i).mu,gmm.gaussians(i).sigma))
-    }
+//    for (i <- 0 until gmm.k) {
+   //   println("weight=%f\nmu=%s\nsigma=\n%s\n" format
+    //    (gmm.weights(i), gmm.gaussians(i).mu,gmm.gaussians(i).sigma))
+   // }
 
 
 //        val array = Array(9,9.0,9)

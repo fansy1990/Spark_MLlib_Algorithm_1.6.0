@@ -34,7 +34,7 @@ class SparkPICTest {
 
       val args = Array(
     "true",
-    "./src/data/clustering/pca.txt",
+    "./src/data/clustering/pic.txt",
     ",",
     "3",
     "10",
@@ -46,8 +46,8 @@ class SparkPICTest {
     // 删除输出目录
     Utils.deleteOutput(args(6))
     SparkPIC.main(args)
-    val exist = new File(args(6)).exists()
-    assertTrue(exist)
+    assertTrue(Utils.fileContainsClassName(args(6)+"/metadata/part-00000",
+      "org.apache.spark.mllib.clustering.PowerIterationClusteringModel"))
 
   }
 
