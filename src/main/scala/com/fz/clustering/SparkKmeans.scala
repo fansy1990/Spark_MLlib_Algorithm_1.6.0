@@ -48,24 +48,24 @@ object SparkKMeans {
     val clusters: KMeansModel = KMeans.train(parsedData,numClusters,numIterations)
 
     // Evaluate clustering by computing Within Set Sum of Squared Errors
-    val WSSSE: Double = clusters.computeCost(parsedData)
-//      println("Within Set Sum of Squared Errors = " + WSSSE)
+   // val WSSSE: Double = clusters.computeCost(parsedData)
+    //      println("Within Set Sum of Squared Errors = " + WSSSE)
 
-//    println("聚类数： "+ clusters.k)
-//    println("聚类中心： ")
-//    clusters.clusterCenters.map(_.toArray).foreach{t =>
-//      for(i <- 0 until(t.length)){
-//        print(t(i)+",")
-//      }
-//      println("")
-//    }
+    //    println("聚类数： "+ clusters.k)
+    //    println("聚类中心： ")
+    //    clusters.clusterCenters.map(_.toArray).foreach{t =>
+    //      for(i <- 0 until(t.length)){
+    //        print(t(i)+",")
+    //      }
+    //      println("")
+    //    }
 
-//    val vec = Array(8.0,7,9)
-//    val cls = clusters.predict(Vectors.dense(vec))
-//
-//    println("预测类别：" + cls)
-//
-//    clusters.predict(parsedData).foreach(t => println("归为： "+t))
+    //    val vec = Array(8.0,7,9)
+    //    val cls = clusters.predict(Vectors.dense(vec))
+    //
+    //    println("预测类别：" + cls)
+    //
+    //    clusters.predict(parsedData).foreach(t => println("归为： "+t))
     clusters.save(sc,outputFile)
 
     sc.stop()
