@@ -33,8 +33,8 @@ class SVMTest {
     // 删除输出目录
     Utils.deleteOutput(args(3))
     SVM.main(args)
-    val exist = new File(args(3)).exists()
-    assertTrue(exist)
+    assertTrue(Utils.fileContainsClassName(args(3)+"/metadata/part-00000",
+      "org.apache.spark.mllib.classification.SVMModel"))
   }
 
   @Test
@@ -45,7 +45,7 @@ class SVMTest {
       "true",
       "./src/data/classification_regression/logistic.dat",
       "2",
-      "./target/svm/tmp1",
+      "./target/svm/tmp2",
       "1",
       " ",
       "30",

@@ -28,8 +28,8 @@ class CustomNaiveBayesTest {
     // 删除输出目录
     Utils.deleteOutput(args(3))
     CustomNaiveBayes.main(args)
-    val exist = new File(args(3)).exists()
-    assertTrue(exist)
+    assertTrue(Utils.fileContainsClassName(args(3)+"/metadata/part-00000",
+      "org.apache.spark.mllib.classification.NaiveBayesModel"))
   }
 
   @Test
@@ -39,7 +39,7 @@ class CustomNaiveBayesTest {
       "true",
       "./src/data/classification_regression/naiveBayes2.dat",
       "2",
-      "./target/bayes/tmp1",
+      "./target/bayes/tmp2",
       "1",
       " ",
       "bernoulli",
@@ -48,7 +48,7 @@ class CustomNaiveBayesTest {
     // 删除输出目录
     Utils.deleteOutput(args(3))
     CustomNaiveBayes.main(args)
-    val exist = new File(args(3)).exists()
-    assertTrue(exist)
+    assertTrue(Utils.fileContainsClassName(args(3)+"/metadata/part-00000",
+      "org.apache.spark.mllib.classification.NaiveBayesModel"))
   }
 }

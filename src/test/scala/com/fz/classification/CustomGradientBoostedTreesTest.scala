@@ -33,8 +33,8 @@ class CustomGradientBoostedTreesTest {
     // 删除输出目录
     Utils.deleteOutput(args(3))
     CustomGradientBoostedTrees.main(args)
-    val exist = new File(args(3)).exists()
-    assertTrue(exist)
+    assertTrue(Utils.fileContainsClassName(args(3)+"/metadata/part-00000",
+      "org.apache.spark.mllib.tree.model.GradientBoostedTreesModel"))
   }
 
   //回归
@@ -58,8 +58,8 @@ class CustomGradientBoostedTreesTest {
     // 删除输出目录
     Utils.deleteOutput(args(3))
     CustomGradientBoostedTrees.main(args)
-    val exist = new File(args(3)).exists()
-    assertTrue(exist)
+    assertTrue(Utils.fileContainsClassName(args(3)+"/metadata/part-00000",
+      "org.apache.spark.mllib.tree.model.GradientBoostedTreesModel"))
   }
 }
 
