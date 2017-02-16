@@ -15,7 +15,7 @@ import org.apache.spark.mllib.tree.DecisionTree
  * output：输出路径
  * targetIndex：目标列所在下标，从1开始
  * splitter：数据分隔符；
- * impurity：不纯度度函数，分类的有：信息熵(entropy)和基尼指数(gini)
+ * impurity：不纯度度函数，分类的有：信息熵(entropy)和基尼指数(gini),如果为回归，则为variance
  * maxDepth：树的最大深度，
  * algo:分类还是回归(classification,regression)
  * maxBins：设定分裂数据集  suggestion 32
@@ -57,7 +57,7 @@ object CustomDecisionTree {
         DecisionTree.trainClassifier(training,numClasses,categoricalFeaturesInfo,impurity,maxDepth,maxBins)
       }
       case "regression" => {
-        DecisionTree.trainRegressor(training,categoricalFeaturesInfo,impurity,maxDepth,maxBins)
+        DecisionTree.trainRegressor(training,categoricalFeaturesInfo,"variance",maxDepth,maxBins)
       }
       case _ => throw new IllegalArgumentException(s"$algo is not supported by the DecisionTree.")
     }
