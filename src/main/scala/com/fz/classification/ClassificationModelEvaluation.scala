@@ -1,11 +1,8 @@
 package com.fz.classification
 
 import com.fz.util.Utils
-import org.apache.spark.mllib.classification.SVMWithSGD
-import org.apache.spark.mllib.optimization.L1Updater
 
 /**
- *
  * 分类算法对比，包括SVM，逻辑回归，随机森林，GradientBoostedTree，
  * NaiveBayes
  *
@@ -26,18 +23,17 @@ import org.apache.spark.mllib.optimization.L1Updater
  * output：输出路径
  * targetIndex：目标列所在下标，从1开始
  * splitter : 输入数据分隔符
- * model1 : 模型1的路径
- * model2: 模型2的路径
+ * model : 模型的路径
+ * numClasses : 模型目标类别个数
  *
- * Created by fanzhe on 2017/1/25.
+ * Created by fanzhe on 2017/3/5.
  */
-//TODO 模型对比待完成
-object ClassificationComparison {
+object ClassificationModelEvaluation {
 
    def main (args: Array[String]) {
     if(args.length != 8){
-      println("Usage: com.fz.classification.ClassificationComparison testOrNot input minPartitions output targetIndex " +
-        "splitter model1 model2")
+      println("Usage: com.fz.classification.ClassificationModelEvaluation testOrNot input minPartitions output " +
+        "targetIndex splitter model numClasses")
 
       System.exit(-1)
     }
@@ -47,36 +43,25 @@ object ClassificationComparison {
      val output = args(3)
      val targetIndex = args(4).toInt // 从1开始，不是从0开始要注意
      val splitter = args(5)
-     val model1Path = args(6)
-     val model2Path = args(7)
+     val modelPath = args(6)
+     val numClasses = args(7).toInt
 
-     // 删除输出，不在Scala算法里面删除，而在Java代码里面删除
-     //     Utils.deleteOutput(output)
 
-     val sc =  Utils.getSparkContext(testOrNot,"Classification Algorithm Comparison")
+     val sc =  Utils.getSparkContext(testOrNot,"Classification Algorithm Evaluation")
 
      // construct data
      // Load and parse the data
      val training = Utils.getLabeledPointData(sc,input,minPartitions,splitter,targetIndex).cache()
-     val numCLasses = Utils.modelParam(sc,model1Path,"numClasses").toInt
-     if( numCLasses != Utils.modelParam(sc,model2Path,"numClasses").toInt){
-       System.err.println("模型1："+model1Path+"和 模型2："+model2Path+" 类别不匹配，请检查metadata!")
-       System.exit(2)
-     }
+//     val numCLasses = Utils.modelParam(sc,modelPath,"numClasses").toInt
 
      // use model to predict
-     val preAndReal1 = Utils.useModel2Predict(sc,model1Path,training)
-
-     val preAndReal2 = Utils.useModel2Predict(sc,model2Path,training)
+     val preAndReal = Utils.useModel2Predict(sc,modelPath,training)
 
      // model1 evaluation
-     val evaluate1 = Utils.evaluate(preAndReal1,numCLasses)
-     val evaluate2 = Utils.evaluate(preAndReal2,numCLasses)
-
+     val evaluate1 = Utils.evaluate(preAndReal,numClasses)
 
      // save result
-     sc.parallelize(Array(evaluate1)).saveAsTextFile(output+"/model1")
-     sc.parallelize(Array(evaluate2)).saveAsTextFile(output+"/model2")
+     sc.parallelize(Array(evaluate1),1).saveAsTextFile(output+"/evaluation")
 
      sc.stop()
   }

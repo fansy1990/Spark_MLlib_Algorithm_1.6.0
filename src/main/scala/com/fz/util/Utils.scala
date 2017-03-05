@@ -2,12 +2,16 @@ package com.fz.util
 
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.fs.{Path, FileSystem}
-import org.apache.spark.mllib.classification.{SVMModel, LogisticRegressionModel}
+import org.apache.spark.mllib.classification.{NaiveBayesModel, SVMModel, LogisticRegressionModel}
+import org.apache.spark.mllib.evaluation.{MulticlassMetrics, BinaryClassificationMetrics}
 import org.apache.spark.mllib.linalg.{Vector, Vectors}
 import org.apache.spark.mllib.recommendation.Rating
 import org.apache.spark.mllib.regression.LabeledPoint
+import org.apache.spark.mllib.tree.model.{DecisionTreeModel, RandomForestModel, GradientBoostedTreesModel}
 import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}
+import org.json4s.DefaultFormats
+import org.json4s.jackson.JsonMethods._
 
 import scala.collection.mutable.ArrayBuffer
 import scala.io.Source
@@ -17,6 +21,40 @@ import scala.io.Source
  * Created by fansy on 2016/12/30.
  */
 object Utils {
+  /**
+   * 根据预测结果进行评价
+   * @param predictionAndLabels
+   * @param numClasses
+   * @return
+   */
+  def evaluate(predictionAndLabels: RDD[(Double, Double)], numClasses: Int) : String = {
+    if(numClasses ==2){
+      val metrics=new BinaryClassificationMetrics(predictionAndLabels)
+      "Precision-Recall Area: "+ metrics.areaUnderPR() + "\n" +
+      "Roc Area: "+ metrics.areaUnderROC() + "\n" +
+      "Precision And Recall Curve:\n" +
+      "precision -> recall"+ "\n" +
+      metrics.pr().collect().map(x => x._1 + " -> "+x._2).mkString("\n").toString +
+      "ROC Curve:\n" +
+        "false positive rate -> true positive rate"+ "\n" +
+        metrics.roc().collect().map(x => x._1 + " -> "+x._2).mkString("\n") +"\n"+
+      "Threshold : precision , recall , f1\n" +
+      (
+        metrics.precisionByThreshold() zip
+          metrics.recallByThreshold() zip
+          metrics.fMeasureByThreshold()
+        ).map(x =>  x._1._1._1 + " : " + x._1._1._2+" , " + x._1._2._2 +" , " + x._2._2).collect().
+        mkString("\n")
+    }else {
+      val metrics = new MulticlassMetrics(predictionAndLabels)
+      "Precision: " + metrics.precision+
+      "\nRecall: " +metrics.recall +
+      "\nConfusion metrics: \n" + metrics.confusionMatrix
+    }
+
+  }
+
+
   /**
    * 获取vector rdd数据
    * @param sc
@@ -38,22 +76,83 @@ object Utils {
   def findDimension(file:String, splitter:String): Int ={
     Source.fromFile(file).getLines.next().split(splitter).size
   }
+
+
+  def metadataPath(path: String): String = new Path(path, "metadata").toUri.toString
+
   /**
-   * 根据路径获取模型
-   * @param s
+   * 根据模型路径获取模型相关信息
+   * @param sc
+   * @param path
+   * @param param
    * @return
    */
-  def getModel(sc:SparkContext , s: String) = {
-    // 读取路径，获得类名：
+  def modelParam(sc:SparkContext,path: String , param:String) = {
     //{"class":"org.apache.spark.mllib.classification.LogisticRegressionModel",
     // "version":"1.0","numFeatures":16,"numClasses":2}
-    val className = "org.apache.spark.mllib.classification.LogisticRegressionModel"
-    val class_ = Class.forName(className)
+    println(param +"," + path)
+    implicit val formats = DefaultFormats
+    val metadata = parse(sc.textFile(metadataPath(path)).first())
+    (metadata \ param).extract[String]
+  }
+  /**
+   * 根据路径获取模型,并进行预测，返回预测结果
+   * @param modelPath
+   * @param sc
+   * @param data
+   * @return
+   */
+  def useModel2Predict(sc:SparkContext , modelPath: String,data:RDD[LabeledPoint]):RDD[(Double,Double)] = {
+    // 读取路径，获得类名：
 
-    class_ match {
-      case x : LogisticRegressionModel => LogisticRegressionModel.load(sc, s)
-      case x : SVMModel => SVMModel.load(sc,s)
-      case _ => println("根据类名加载模型异常！"); null
+    val className = modelParam(sc,modelPath,"class")
+    print(className)
+    className match {
+      case "org.apache.spark.mllib.classification.LogisticRegressionModel" => {
+         val model = LogisticRegressionModel.load(sc, modelPath).clearThreshold()
+          data.map{case LabeledPoint(label, features)=>
+          val prediction= model.predict(features)
+          (prediction, label)
+        }
+      }
+      case "org.apache.spark.mllib.classification.SVMModel" => {
+        val model = SVMModel.load(sc,modelPath).clearThreshold()
+        data.map{case LabeledPoint(label, features)=>
+          val prediction= model.predict(features)
+          (prediction, label)
+        }
+      }
+      case "org.apache.spark.mllib.tree.DecisionTreeModel" => { // TODO tree.model.DecisionTreeModel 这里是bug还是？
+        val model = DecisionTreeModel.load(sc,modelPath)
+
+        data.map{case LabeledPoint(label, features)=>
+          val prediction= model.predict(features)
+          (prediction, label)
+        }
+      }
+      case "org.apache.spark.mllib.tree.model" => {
+        val model =GradientBoostedTreesModel.load(sc,modelPath)
+        data.map{case LabeledPoint(label, features)=>
+          val prediction= model.predict(features)
+          (prediction, label)
+        }
+      }
+      case "org.apache.spark.mllib.classification.NaiveBayesModel" => {
+        val model =NaiveBayesModel.load(sc,modelPath)
+        data.map{case LabeledPoint(label, features)=>
+          val prediction= model.predict(features)
+          (prediction, label)
+        }
+      }
+      case "org.apache.spark.mllib.tree.model.RandomForestModel" => {
+        val model = RandomForestModel.load(sc,modelPath)
+        data.map{case LabeledPoint(label, features)=>
+          val prediction= model.predict(features)
+          (prediction, label)
+        }
+      }
+      case _ => println("根据类名加载模型异常！")
+        throw new RuntimeException("根据类名加载模型异常！")
     }
 
   }
