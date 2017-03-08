@@ -29,3 +29,8 @@ Spark 1.6.0 MLlib算法封装：
 关联规则：
 1. FP算法：FP Tree算法，提供事务数据即可，不要求一定需要数值或字符串；
 2. AssociationRules： 暂时不清楚算法；
+
+
+部署：
+1. 下载工程，然后install -Dmaven.test.skip=true , 得到mllib.algorithm.1.6.0-1.0-SNAPSHOT.jar 包；
+2. 拷贝mllib.algorithm.1.6.0-1.0-SNAPSHOT.jar 到HDFS上（该路径需要和业务工程配置文件中的参数对应）；
